@@ -136,6 +136,16 @@ void fork_cmd(info_t *info)
 		perror("Error:");
 		return;
 	}
+	
+	if (WIFSIGNALED(info->status)) 
+	{
+    int signal_number = WTERMSIG(info->status);
+	char signal_char = (char)('0' + signal_number);
+    _puts("Child process terminated by signal ");
+	_putchar(signal_char);
+	_putchar('\n');
+	}
+
 	if (child_pid == 0)
 	{
 		if (execve(info->path, info->argv, get_environ(info)) == -1)
